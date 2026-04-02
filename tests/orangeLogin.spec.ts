@@ -1,5 +1,6 @@
-import { test, expect } from "@playwright/test";
+
 import { orangeLogin } from '../pages/orangeLogin';
+import {test,expect} from '../fixture/Testdataorange';
 
 let orangelogin: orangeLogin; 
 
@@ -8,20 +9,20 @@ test.beforeEach(async({page})=>{
      await orangelogin.goto();
 });
 
-test("Login Test",async({page})=>{
+test("Login Test",async({page,testData})=>{
 
-    await orangelogin.Login('Admin','admin123');
+    await orangelogin.Login(testData.validUser.username,testData.validUser.password);
     await expect(page).toHaveURL(/dashboard/);
 
 });
-test("InvalidLogin Test",async({page})=>{
+test("InvalidLogin Test",async({page,testData})=>{
 
-    await orangelogin.Login('Admin','admin1243')
+    await orangelogin.Login(testData.invalidUser.username,testData.invalidUser.password)
     await expect(orangelogin.InvalidloginError).toHaveText('Invalid credentials');;
 });
-test("EmptyLogin Test",async({page})=>{
+test("EmptyLogin Test",async({page,testData})=>{
 
-    await orangelogin.Login('','')
+    await orangelogin.Login(testData.emptyUser.username,testData.emptyUser.password)
      await expect(orangelogin.usernameError).toHaveText('Required');
     await expect(orangelogin.passwordError).toHaveText('Required');
    
