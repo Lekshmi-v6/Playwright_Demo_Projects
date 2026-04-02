@@ -10,11 +10,14 @@ this.page= page;
 
  }
   get usernameError() {
-  return this.page.locator('.oxd-input-group__message').nth(0);
+ 
+  return this.page.locator('div.oxd-input-group:has(input[name="username"]) .oxd-input-group__message')
+  
 }
 
 get passwordError() {
-  return this.page.locator('.oxd-input-group__message').nth(1);
+   return this.page.locator('div.oxd-input-group:has(input[name="password"]) .oxd-input-group__message')
+  
 }
  async goto()
  {
