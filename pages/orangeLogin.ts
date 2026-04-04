@@ -21,6 +21,7 @@ get passwordError() {
 }
  async goto()
  {
+   await this.page.context().clearCookies();
     await this.page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
  }
  async Login(username : string,password : string){
