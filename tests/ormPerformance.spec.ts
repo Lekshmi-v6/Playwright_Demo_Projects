@@ -19,7 +19,7 @@ test('Perfomance Module',async ({page,testData})=>{
      await performance.kpiAdd();
      await performance.KPISearch();
      await performance.kpiEdit();
-     await performance.kpidelete();
+    await performance.kpidelete();
     await page.pause();
     
 });

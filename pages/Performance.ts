@@ -50,10 +50,11 @@ async KPISearch(){
         const KPindicator=this.page.locator('.oxd-table-card').nth(i);
         const kpcloumn= await KPindicator.locator('.oxd-table-cell').nth(1).textContent();
         console.log(kpcloumn);
-       if (kpcloumn === 'Planning Test')
+       if (kpcloumn?.includes('Planning Test'))
         {
         await KPindicator.locator('.oxd-icon.bi-pencil-fill').click();
-           break; 
+        await expect(this.page.getByRole('button', { name: 'Save' })).toBeVisible();
+        break; 
        }
   
     }
@@ -61,29 +62,22 @@ async KPISearch(){
    
 }
 async kpiEdit(){
-const minRate =this.page.locator('.oxd-grid-4 .oxd-input').first();
+const minRate =this.page.locator('.oxd-input-group .oxd-input').nth(1);
 await minRate.click();
 await minRate.fill('10');
 await this.page.locator('.oxd-switch-input').click();
 await this.page.getByRole('button' ,{name: 'Save'}).click();
-await this.page.locator('.oxd-table-card').first().waitFor();
 }
  async kpidelete(){
-const Recount= await this.page.locator('.oxd-table-card').count();
-console.log(Recount);
-   for(let i=0;i<Recount;i++){
-    const cards=this.page.locator('.oxd-table-card').nth(i);
-    const kpicloumn= await cards.locator('.oxd-table-cell').nth(1).textContent();
-        console.log(kpicloumn);
-       if (kpicloumn?.includes('Planning Test'))
-        {
-        await cards.locator('.oxd-icon.bi-trash').click();
-       /* const confirmBtn=await this.page.locator('button:has-text("Yes, Delete")');
-        await confirmBtn.waitFor();
-        await confirmBtn.click();*/
-           break; 
-       }
-}
+ const row = this.page.locator('.oxd-table-card').filter({ hasText: 'Planning Test' });
+
+  await row.locator('button').nth(1).click();
+
+  const confirmBtn = this.page.getByRole('button', { name: 'Yes, Delete' });
+  await expect(confirmBtn).toBeVisible();
+  await confirmBtn.click();
+
+  await expect(row).toHaveCount(0);
 
 }
 }
