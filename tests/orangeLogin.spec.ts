@@ -1,6 +1,7 @@
 
 import { orangeLogin } from '../pages/orangeLogin';
 import {test,expect} from '../fixture/Testdataorange';
+import { getExcelData } from '../utils/excelReader';
 
 let orangelogin: orangeLogin; 
 
